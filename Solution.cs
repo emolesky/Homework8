@@ -4,28 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ValidParaentheses
+namespace BaseballGame
 {
     public class Solution
     {
-        public bool isValid(string s)
+        public int CalPoints(string[] operations)
         {
-            Stack<char> stack = new Stack<char>();
-
-            foreach (char c in s)
+            Stack<int> record = new Stack<int>();
+            foreach (string operation in operations)
             {
-                if (c == '(') stack.Push(')');
-                else if (c == '[') stack.Push(']');
-                else if (c == '{') stack.Push('}');
-                else
+                if( operation == "+")
                 {
-                    if (stack.Count == 0 || stack.Pop() != c)
-                        return false;
+                    int top = record.Pop();
+                    int newTop = top + record.Peek();
+                    record.Push(top);
+                    record.Push(newTop);
+                }
+                else if(operation =="D")
+                {
+                    record.Push(2 * record.Peek());
+                }
+                else if (operation == "C")
+                {
+                    record.Pop();
 
                 }
-
             }
-            return stack.Count == 0;
+            int sum = 0;
+            foreach( int score in record)
+            {
+                sum += score;
+            }
+            return sum;
         }
     }
 }
