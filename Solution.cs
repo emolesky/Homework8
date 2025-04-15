@@ -4,33 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NumberOfStudents
+namespace ValidParaentheses
 {
     public class Solution
     {
-        public int CountStudents(int[] students, int[] sandwiches)
+        public bool isValid(string s)
         {
-            Queue<int> queue = new Queue<int>(students);
+            Stack<char> stack = new Stack<char>();
 
-            int sandwichIndex = 0;
-            int unableToEatCount = 0;
-
-            while(queue.Count > 0 && unableToEatCount < queue.Count)
+            foreach (char c in s)
             {
-                int student = queue.Dequeue();
-
-                if(student == sandwiches[sandwichIndex])
-                {
-                    sandwichIndex++;
-                    unableToEatCount = 0;
-                }
+                if (c == '(') stack.Push(')');
+                else if (c == '[') stack.Push(']');
+                else if (c == '{') stack.Push('}');
                 else
                 {
-                    queue.Enqueue(student);
-                    unableToEatCount++;
+                    if (stack.Count == 0 || stack.Pop() != c)
+                        return false;
+
                 }
+
             }
-            return queue.Count;
+            return stack.Count == 0;
         }
     }
 }
