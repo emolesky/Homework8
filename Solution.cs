@@ -4,38 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BaseballGame
+namespace FindPivot
 {
     public class Solution
     {
-        public int CalPoints(string[] operations)
+        public int PivotIndex(int[] nums)
         {
-            Stack<int> record = new Stack<int>();
-            foreach (string operation in operations)
+            int totalSum = 0;
+            foreach(int num in nums)
             {
-                if( operation == "+")
-                {
-                    int top = record.Pop();
-                    int newTop = top + record.Peek();
-                    record.Push(top);
-                    record.Push(newTop);
-                }
-                else if(operation =="D")
-                {
-                    record.Push(2 * record.Peek());
-                }
-                else if (operation == "C")
-                {
-                    record.Pop();
-
-                }
+                totalSum += num;
             }
-            int sum = 0;
-            foreach( int score in record)
+            int leftSum = 0;
+            for ( int i = 0; i < nums.Length; i++)
             {
-                sum += score;
+                int rightSum = totalSum - leftSum - nums[i];
+                if (leftSum ==rightSum)
+                {
+                    return i;
+                }
+                leftSum += nums[i];
             }
-            return sum;
+            return -1;
         }
     }
 }
