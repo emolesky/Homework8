@@ -1,17 +1,13 @@
-﻿namespace NumberOfCalls
+﻿namespace NumberOfStudents
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            RecentCounter aRecentCounter = new RecentCounter();
-
-            Console.WriteLine(aRecentCounter.Ping(1));
-            Console.WriteLine(aRecentCounter.Ping(100));
-            Console.WriteLine(aRecentCounter.Ping(3001));
-            Console.WriteLine(aRecentCounter.Ping(3002));
-
-
+            Solution aSolution = new Solution();
+            int[] students = { 1, 1, 0, 0 };
+            int[] sandwiches = { 0, 1, 0, 1 };
+            Console.WriteLine(aSolution.CountStudents(students, sandwiches));
         }
     }
 }

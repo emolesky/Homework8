@@ -4,28 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindPivot
+namespace NumberOfStudents
 {
     public class Solution
     {
-        public int PivotIndex(int[] nums)
+        public int CountStudents(int[] students, int[] sandwiches)
         {
-            int totalSum = 0;
-            foreach(int num in nums)
+            Queue<int> queue = new Queue<int>(students);
+
+            int sandwichIndex = 0;
+            int unableToEatCount = 0;
+
+            while(queue.Count > 0 && unableToEatCount < queue.Count)
             {
-                totalSum += num;
-            }
-            int leftSum = 0;
-            for ( int i = 0; i < nums.Length; i++)
-            {
-                int rightSum = totalSum - leftSum - nums[i];
-                if (leftSum ==rightSum)
+                int student = queue.Dequeue();
+
+                if(student == sandwiches[sandwichIndex])
                 {
-                    return i;
+                    sandwichIndex++;
+                    unableToEatCount = 0;
                 }
-                leftSum += nums[i];
+                else
+                {
+                    queue.Enqueue(student);
+                    unableToEatCount++;
+                }
             }
-            return -1;
+            return queue.Count;
         }
     }
 }
